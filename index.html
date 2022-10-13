@@ -1,0 +1,70 @@
+
+</html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataviz Belib'</title>
+
+    <!--librairie javascript Leaflet et le fichier CSS Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="style/style.css" />
+
+    <!--jQuery pour les fichiers geojson-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body onload="initialize()">
+    <header>
+        <img src="style/logo.png" alt="Logo Total energie">
+        <nav>
+            <button>Accueil</button>
+            <button>Borne</button>
+            <button>A propos</button>
+        </nav>
+    </header>
+    <!-- <!– DIV qui contient la carte des bornes –> -->
+    <div id="mapid"></div>
+
+    <!-- <div id="time-ranges" class="leaflet-bar">
+        <form action="#" id="form">
+          <label for="from">
+            Du
+            <input id="from" type="date" value="2020-01-01" name="from">
+          </label>
+          <label for="to">
+            Au
+            <input  id="to" type="date" value="2022-12-31" name="to">
+          </label>
+          <input type="submit" value="Update">
+        </form>
+      </div> -->
+
+    <div class="info">
+        <section class="glass">
+
+            <div class="borne">
+                <img src="style/eco_car1.svg">
+                <img src="style/belib.svg" alt="logo entreprise belib" style="width: 20%;">
+                <p>De la recharge lente et économique pour les stationnements longs, à la recharge rapide pour les
+                    usagers pressés ou les gros rouleurs, l'offre Belib' répond à l'ensemble de vos besoins. Vous
+                    trouverez aussi des places pour les personnes à mobilité réduite (PMR) et des places dédiées aux
+                    véhicules électriques 2 roues. Ainsi, à travers les 4 services de recharges ("MOTO"; "FLEX"; "BOOST"
+                    et "BOOST +") </p>
+            </div>
+            <div class="quote">
+                <p>"Belib', le réseau public parisien de bornes de recharge pour véhicules électriques"</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- <!– fichier javascript externe pour le contenu de la carte Leaflet –> -->
+    <script src="mesFonctions.js"></script>
+</body>
+
+</html>
