@@ -10,18 +10,20 @@
 
     <!--librairie javascript Leaflet et le fichier CSS Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="style/nouislider.css" />
     <script type="text/javascript" src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 
     <link rel="stylesheet" href="style/style.css" />
 
     <!--jQuery pour les fichiers geojson-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="script/nouislider.js"></script>
 
 </head>
 
 <body onload="initialize()">
     <header>
-        <img src="style/logo.png" alt="Logo Total energie">
+        <img src="img/logo.png" alt="Logo Total energie">
         <nav>
             <button>Accueil</button>
             <button>Borne</button>
@@ -30,6 +32,8 @@
     </header>
     <!-- <!– DIV qui contient la carte des bornes –> -->
     <div id="mapid"></div>
+    <br>
+    <div id="slider"></div>
 
     <!-- <div id="time-ranges" class="leaflet-bar">
         <form action="#" id="form">
@@ -49,8 +53,8 @@
         <section class="glass">
 
             <div class="borne">
-                <img src="style/eco_car1.svg">
-                <img src="style/belib.svg" alt="logo entreprise belib" style="width: 20%;">
+                <img src="img/eco_car1.svg">
+                <img src="img/belib.svg" alt="logo entreprise belib" style="width: 20%;">
                 <p>De la recharge lente et économique pour les stationnements longs, à la recharge rapide pour les
                     usagers pressés ou les gros rouleurs, l'offre Belib' répond à l'ensemble de vos besoins. Vous
                     trouverez aussi des places pour les personnes à mobilité réduite (PMR) et des places dédiées aux
@@ -64,7 +68,7 @@
     </div>
 
     <!-- <!– fichier javascript externe pour le contenu de la carte Leaflet –> -->
-    <script src="mesFonctions.js"></script>
+    <script src="script/mesFonctions.js"></script>
 </body>
 
 </html>

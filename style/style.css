@@ -163,3 +163,7 @@ body{
   background: #5C7DB8;
   border-color: #5C7DB8;
 }
+/* le " range slider " */
+.slider{
+  max-width:80% ;
+}
