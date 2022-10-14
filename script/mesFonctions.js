@@ -97,48 +97,48 @@ function initialize() {
 // var makers = {"2019" : [], "2020" : [], "2021" : [], "2022" : []} ;
 // var slider = document.getElementById('slider');
 
-// noUiSlider.create(slider, {
-//     start: [20, 80],
-//     connect: true,
-//     range: {
-//         'min': 0,
-//         'max': 100
-//     }
-// });
-
-
-L.Control.SliderControl = L.Control.extend({
-    options: {
-        position: 'topright',
-        layers: null,
-        timeAttribute: 'date_mise_en_service',
-        isEpoch: false,     
-        startTimeIdx: 0,    
-        timeStrLength: 19,  
-        maxValue: -1,
-        minValue: 0,
-        showAllOnStart: false,
-        markers: null,
-        range: false,
-        follow: false,
-        sameDate: false,
-        alwaysShowDate : false,
-        rezoom: null
-    },
-
-onRemove: function (map) {
-    
-    for (i = this.options.minValue; i <= this.options.maxValue; i++) {
-        map.removeLayer(this.options.markers[i]);
+noUiSlider.create(slider, {
+    start: [20, 80],
+    connect: true,
+    range: {
+        'min': 0,
+        'max': 100
     }
-    $('#leaflet-slider').remove();
+});
+
+
+// L.Control.SliderControl = L.Control.extend({
+//     options: {
+//         position: 'topright',
+//         layers: null,
+//         timeAttribute: 'date_mise_en_service',
+//         isEpoch: false,     
+//         startTimeIdx: 0,    
+//         timeStrLength: 19,  
+//         maxValue: -1,
+//         minValue: 0,
+//         showAllOnStart: false,
+//         markers: null,
+//         range: false,
+//         follow: false,
+//         sameDate: false,
+//         alwaysShowDate : false,
+//         rezoom: null
+//     },
+
+// onRemove: function (map) {
+    
+//     for (i = this.options.minValue; i <= this.options.maxValue; i++) {
+//         map.removeLayer(this.options.markers[i]);
+//     }
+//     $('#leaflet-slider').remove();
 
     
-    $(document).off("mouseup");
-    $(".slider").off("mousedown");
-},
+//     $(document).off("mouseup");
+//     $(".slider").off("mousedown");
+// },
 
 
 
 
-});
+// });
