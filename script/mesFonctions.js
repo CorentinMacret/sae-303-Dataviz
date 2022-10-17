@@ -86,59 +86,234 @@ function initialize() {
 
 
 
-///////////////////////////
 
 
+// ////////////DATE SLIDER////////////////
 
-// var marqueur = $.getJSON("arrondissements.geojson", function (date_mise_en_service){
+var dateSlider = document.getElementById("noUiSlider");
+var monthsOld = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Aout",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre"
+];
+var months = [
+  "01/",
+  "02/",
+  "03/",
+  "04/",
+  "05/",
+  "06/",
+  "07/",
+  "08/",
+  "09/",
+  "10/",
+  "11/",
+  "12/"
+];
 
-// }
+var initial = "2019-08-01";
+var final = "2022-12-23";
 
-// var makers = {"2019" : [], "2020" : [], "2021" : [], "2022" : []} ;
-// var slider = document.getElementById('slider');
+// Créez une nouvelle date à partir d'une chaîne, sous forme d'horodatage.
+function timestamp(str) {
+  return new Date(str).getTime();
+}
 
-noUiSlider.create(slider, {
-    start: [20, 80],
-    connect: true,
-    range: {
-        'min': 0,
-        'max': 100
+// Représentation sous forme de chaîne de la date.
+function formatDate(date) {
+  console.log(
+    "Format: ",
+    monthsOld[date.getMonth()] + " " + date.getFullYear().toString()
+  );
+
+  return (
+    monthsOld[date.getMonth()] + " " + date.getFullYear().toString()
+  );
+}
+
+function formatDate2(date) {
+  console.log(
+    "Format: ",
+    months[date.getMonth()] + " " + date.getFullYear().toString()
+  );
+
+  return (
+    months[date.getMonth()] + " " + date.getFullYear().toString()
+  );
+}
+
+noUiSlider.create(dateSlider, {
+  // définir une plage période
+  range: {
+    min: timestamp(initial),
+    max: timestamp(final)
+  },
+  connect: true,
+  // Étapes d'un trimestre de l'année
+  step: 50 * 30 * 60 * 60 * 1000,
+
+  // Two more timestamps indicate the handle starting positions.
+  start: [timestamp(initial), timestamp(final)],
+  //No decimals
+  //format: wNumb({
+  // decimals: 0
+  //}),
+  pips: {
+    mode: "steps",
+    stepped: true,
+    density: 24,
+    format: {
+      to: function (value) {
+        if (value == 0) return 0;
+        return formatDate2(new Date(value));
+      },
+      from: function (value) {
+        return timestamp(value);
+      }
     }
+  }
+});
+
+//Slider Control
+var dateValues = [
+  document.getElementById("datestart"),
+  document.getElementById("dateend")
+];
+
+dateSlider.noUiSlider.on("update", function (values, handle) {
+  console.log("Handle Value: ", values[handle]);
+  dateValues[handle].innerHTML = formatDate(new Date(+values[handle]));
 });
 
 
-// L.Control.SliderControl = L.Control.extend({
-//     options: {
-//         position: 'topright',
-//         layers: null,
-//         timeAttribute: 'date_mise_en_service',
-//         isEpoch: false,     
-//         startTimeIdx: 0,    
-//         timeStrLength: 19,  
-//         maxValue: -1,
-//         minValue: 0,
-//         showAllOnStart: false,
-//         markers: null,
-//         range: false,
-//         follow: false,
-//         sameDate: false,
-//         alwaysShowDate : false,
-//         rezoom: null
-//     },
-
-// onRemove: function (map) {
-    
-//     for (i = this.options.minValue; i <= this.options.maxValue; i++) {
-//         map.removeLayer(this.options.markers[i]);
-//     }
-//     $('#leaflet-slider').remove();
-
-    
-//     $(document).off("mouseup");
-//     $(".slider").off("mousedown");
-// },
 
 
+// COURBE DATAVIZ EN TEST D'UN CODE TROUVÉ 
 
+$('document').ready(function() {
 
-// });
+    var url = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json';
+  
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+    var formatCurrency = d3.format("$,.2f");
+  
+    $.getJSON(url).success(function(jsonData) {
+      var data = jsonData.data;
+  
+      console.log(data);
+      console.log(JSON.stringify(jsonData));
+  
+      d3.select(".notes")
+        .append("text")
+        .text(jsonData.description);
+  
+      var margin = {
+          top: 5,
+          right: 10,
+          bottom: 30,
+          left: 75
+        },
+        width = 1000 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+  
+      var barWidth = Math.ceil(width / data.length);
+  
+      minDate = new Date(data[0][0]);
+      maxDate = new Date(data[274][0]);
+  
+      var x = d3.time.scale()
+        .domain([minDate, maxDate])
+        .range([0, width]);
+  
+      var y = d3.scale.linear()
+        .range([height, 0])
+        .domain([0, d3.max(data, function(d) {
+          return d[1];
+        })]);
+  
+      var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(d3.time.years, 5);
+  
+      var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10, "");
+  
+      var infobox = d3.select(".infobox");
+  
+      var div = d3.select(".card").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+  
+      var chart = d3.select(".chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+      chart.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+  
+      chart.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", "0.8em")
+        .style("text-anchor", "end")
+        .text("Gross Domestic Product, USA");
+  
+      chart.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) {
+          return x(new Date(d[0]));
+        })
+        .attr("y", function(d) {
+          return y(d[1]);
+        })
+        .attr("height", function(d) {
+          return height - y(d[1]);
+        })
+        .attr("width", barWidth)
+        .on("mouseover", function(d) {
+          var rect = d3.select(this);
+          rect.attr("class", "mouseover");
+          var currentDateTime = new Date(d[0]);
+          var year = currentDateTime.getFullYear();
+          var month = currentDateTime.getMonth();
+          var dollars = d[1];
+          div.transition()
+            .duration(200)
+            .style("opacity", 0.9);
+          div.html("<span class='amount'>" + formatCurrency(dollars) + "&nbsp;Billion </span><br><span class='year'>" + year + ' - ' + months[month] + "</span>")
+            .style("left", (d3.event.pageX + 5) + "px")
+            .style("top", (d3.event.pageY - 50) + "px");
+        })
+        .on("mouseout", function() {
+          var rect = d3.select(this);
+          rect.attr("class", "mouseoff");
+          div.transition()
+            .duration(500)
+            .style("opacity", 0);
+        });
+  
+    });
+  
+  });
